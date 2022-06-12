@@ -1,38 +1,38 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "fullbright-1-19",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Fullbright 1.19",
+  "description": "This mod lets you have a high gamma value!",
   "authors": [
-    "Me!"
+    "Greenman999#8421"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://greenman999.de/",
+    "sources": "https://github.com/Greeenman999/1.19-fullbright"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/fullbright-1-19/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "de.greenman999.fullbright.FullbrightMod"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "119-fullbright.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.14.6",
     "fabric": "*",
-    "minecraft": "~1.18.2",
+    "minecraft": "1.19",
     "java": ">=17"
   },
   "suggests": {
-    "another-mod": "*"
+
   }
 }
