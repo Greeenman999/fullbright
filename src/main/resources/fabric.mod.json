@@ -20,7 +20,8 @@
   "entrypoints": {
     "main": [
       "de.greenman999.fullbright.FullbrightMod"
-    ]
+    ],
+    "modmenu": [ "de.greenman999.fullbright.ModMenuApiImpl" ]
   },
   "mixins": [
     "119-fullbright.mixins.json"

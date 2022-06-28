@@ -1,5 +1,6 @@
 package de.greenman999.fullbright.mixin;
 
+import de.greenman999.fullbright.FullbrightMod;
 import net.minecraft.client.option.SimpleOption;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,8 +15,10 @@ public class SimpleOptionMixin {
 
     @Inject(method = "validate(Ljava/lang/Double;)Ljava/util/Optional;", at = @At("RETURN"), cancellable = true)
     public void removeValidation(Double double_, CallbackInfoReturnable<Optional<Double>> cir) {
-        if(double_ == 69.0) {
-            cir.setReturnValue(Optional.of(69.0));
+        if(FullbrightMod.enabled) {
+            if(double_ == 69420.0) {
+                cir.setReturnValue(Optional.of(69420.0));
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package de.greenman999.fullbright.mixin;
 
+import de.greenman999.fullbright.FullbrightMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,8 +14,13 @@ public class InGameHudMixin {
 
     @Inject(method = "render", at = @At("RETURN"))
     public void changeGamma(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        client.options.getGamma().setValue(69.0);
+        if(FullbrightMod.enabled) {
+            MinecraftClient client = MinecraftClient.getInstance();
+            client.options.getGamma().setValue(69420.0);
+        }else {
+            MinecraftClient client = MinecraftClient.getInstance();
+            client.options.getGamma().setValue(1.0);
+        }
     }
 
 }
