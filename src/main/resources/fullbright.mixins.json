@@ -6,8 +6,7 @@
   "mixins": [
   ],
   "client": [
-    "InGameHudMixin",
-    "SimpleOptionMixin"
+    "DoubleSliderCallbacksMixin"
   ],
   "injectors": {
     "defaultRequire": 1
