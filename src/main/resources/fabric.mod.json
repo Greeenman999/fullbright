@@ -3,7 +3,7 @@
   "id": "fullbright",
   "version": "${version}",
   "name": "Fullbright",
-  "description": "This mod lets you have a high gamma value!",
+  "description": "This is a fabric mod that adds a fullbright feature to the game.",
   "authors": [
     "Greenman999"
   ],
