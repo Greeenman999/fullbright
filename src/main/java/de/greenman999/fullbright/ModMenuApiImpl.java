@@ -2,52 +2,57 @@ package de.greenman999.fullbright;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import me.shedaniel.autoconfig.serializer.YamlConfigSerializer;
-import me.shedaniel.clothconfig2.api.ConfigBuilder;
-import me.shedaniel.clothconfig2.api.ConfigCategory;
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import me.shedaniel.clothconfig2.gui.entries.BooleanListEntry;
-import net.fabricmc.loader.api.FabricLoader;
+import dev.isxander.yacl3.api.*;
+import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
+import dev.isxander.yacl3.api.controller.DoubleSliderControllerBuilder;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.client.gui.screen.option.KeybindsScreen;
 import net.minecraft.text.Text;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import net.minecraft.util.Formatting;
 
 public class ModMenuApiImpl implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> {
-            ConfigBuilder builder = ConfigBuilder.create()
-                    .setParentScreen(MinecraftClient.getInstance().currentScreen)
-                    .setTitle(Text.of("Fullbright 1.19"));
-            ConfigCategory general = builder.getOrCreateCategory(Text.literal("General"));
-            ConfigEntryBuilder configBuilder = builder.entryBuilder();
-            general.addEntry(configBuilder.startBooleanToggle(Text.of("Enabled"), FullbrightMod.enabled)
-                    .setDefaultValue(false) // Recommended: Used when user click "Reset"
-                    .setTooltip(Text.of("Toggle fullbright")) // Optional: Shown when the user hover over this option
-                    .setSaveConsumer(newValue -> FullbrightMod.enabled = newValue) // Recommended: Called when user save the config
-                    .build()); // Builds the option entry for cloth config
-
-            builder.setSavingRunnable(() -> {
-                // Serialise the config into the config file. This will be called last after all variables are updated.
-
-
-
-                try {
-                    FullbrightMod.saveConfig();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-            });
-
-            Screen screen = builder.build();
-            return screen;
-        };
+        return parent -> YetAnotherConfigLib.createBuilder()
+                .title(Text.translatable("fullbright.config.title"))
+                .category(ConfigCategory.createBuilder()
+                        .name(Text.translatable("fullbright.config.categories.main.name"))
+                        .option(Option.<Boolean>createBuilder()
+                                .name(Text.translatable("fullbright.config.categories.main.options.enabled.name"))
+                                .description(OptionDescription.of(Text.translatable("fullbright.config.categories.main.options.enabled.description")))
+                                .binding(false, () -> FConfig.enabled, FullbrightMod::setFullbright)
+                                .controller(opt -> BooleanControllerBuilder.create(opt)
+                                        .coloured(true)
+                                        .yesNoFormatter())
+                                .build())
+                        .option(Option.<Double>createBuilder()
+                                .name(Text.translatable("fullbright.config.categories.main.options.brightness.name"))
+                                .description(OptionDescription.of(Text.translatable("fullbright.config.categories.main.options.brightness.description")))
+                                .binding(100.0, () -> FConfig.brightness, newVal -> FConfig.brightness = newVal)
+                                .controller(opt -> DoubleSliderControllerBuilder.create(opt)
+                                        .range(0.0, 100.0)
+                                        .step(1.0))
+                                .build())
+                        .option(Option.<Double>createBuilder()
+                                .name(Text.translatable("fullbright.config.categories.main.options.default-brightness.name"))
+                                .description(OptionDescription.of(Text.translatable("fullbright.config.categories.main.options.default-brightness.description")))
+                                .binding(0.5, () -> FConfig.defaultBrightness, newVal -> FConfig.defaultBrightness = newVal)
+                                .controller(opt -> DoubleSliderControllerBuilder.create(opt)
+                                        .range(0.0, 1.0)
+                                        .step(0.1))
+                                .build())
+                        .option(LabelOption.createBuilder()
+                                .line(Text.translatable("fullbright.config.categories.main.options.keybindings", FullbrightMod.keyBinding.getBoundKeyLocalizedText()))
+                                .line(Text.translatable("fullbright.config.categories.main.options.keybindings.notice").formatted(Formatting.GRAY))
+                                .build())
+                        .option(ButtonOption.createBuilder()
+                                .name(Text.translatable("fullbright.config.categories.main.options.open-controls.name"))
+                                .description(OptionDescription.of(Text.translatable("fullbright.config.categories.main.options.open-controls.description")))
+                                .text(Text.empty())
+                                .action((screen, opt) -> MinecraftClient.getInstance().setScreen(new KeybindsScreen(parent, MinecraftClient.getInstance().options)))
+                                .build())
+                        .build())
+                .build().generateScreen(parent);
     }
 }
