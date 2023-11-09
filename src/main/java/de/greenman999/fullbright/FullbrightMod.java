@@ -58,7 +58,7 @@ public class FullbrightMod implements ClientModInitializer {
 			}
 			if(openConfigScreen) {
 				openConfigScreen = false;
-				MinecraftClient.getInstance().setScreen(modMenuApi.getModConfigScreenFactory().create(MinecraftClient.getInstance().currentScreen));
+				MinecraftClient.getInstance().setScreen(FConfig.openConfigScreen(MinecraftClient.getInstance().currentScreen));
 			}
 			while (keyBinding.wasPressed()) {
 				toggleFullbright();
