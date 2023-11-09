@@ -1,0 +1,17 @@
+{
+  "fullbright.config.title": "Fullbright Konfiguration",
+  "fullbright.config.categories.main.name": "Hauptkonfiguration",
+  "fullbright.config.categories.main.tooltip": "",
+  "fullbright.config.categories.main.options.enabled.name": "Aktiviert",
+  "fullbright.config.categories.main.options.enabled.description": "Aktiviere und deaktiviere den Fullbright-Mod.",
+  "fullbright.config.categories.main.options.brightness.name": "Fullbright Helligkeit",
+  "fullbright.config.categories.main.options.brightness.description": "Auf diesen Wert wird der Gamma-Wert gesetzt, wenn du Fullbright aktivierst.",
+  "fullbright.config.categories.main.options.default-brightness.name": "Standard-Helligkeit",
+  "fullbright.config.categories.main.options.default-brightness.description": "Auf diesen Wert wird der Gamma-Wert gesetzt, wenn du Fullbright deaktivierst.",
+  "fullbright.config.categories.main.options.keybindings": "Bitte konfiguriere deine Tastenkombinationen im Steuerungsmenü. Derzeit eingestellt auf: %d",
+  "fullbright.config.categories.main.options.keybindings.notice": "Hinweis: Die oben angegebene Tastaturbelegung wird erst aktualisiert, wenn du diesen Bildschirm erneut öffnest.",
+  "fullbright.config.categories.main.options.open-controls.name": "Tastenkombinationen öffnen",
+  "fullbright.config.categories.main.options.open-controls.description": "Öffne das Steuerungsmenü, um die Tastaturbelegung zu konfigurieren.",
+  "key.fullbright.toggle": "Fullbright umschalten",
+  "category.fullbright.main": "Fullbright"
+}
