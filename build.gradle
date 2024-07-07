@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -33,7 +33,7 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modApi("com.terraformersmc:modmenu:${project.modmenu_version}")
-	modImplementation 'dev.isxander.yacl:yet-another-config-lib-fabric:3.2.1+1.20.2'
+	modImplementation 'dev.isxander:yet-another-config-lib:3.5.0+1.21-fabric'
 	implementation 'com.google.code.gson:gson:2.10.1'
 }
 
@@ -46,7 +46,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 17
+	it.options.release = 21
 }
 
 java {

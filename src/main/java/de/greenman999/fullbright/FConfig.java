@@ -17,7 +17,7 @@ import net.minecraft.util.Identifier;
 public class FConfig {
 
     public static ConfigClassHandler<FConfig> HANDLER = ConfigClassHandler.createBuilder(FConfig.class)
-            .id(new Identifier("fullbright", "fconfig"))
+            .id(Identifier.of("fullbright", "fconfig"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
                     .setPath(FabricLoader.getInstance().getConfigDir().resolve("fullbright.json5"))
                     .setJson5(true)
