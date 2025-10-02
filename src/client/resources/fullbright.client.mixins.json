@@ -1,12 +1,8 @@
 {
   "required": true,
-  "minVersion": "0.8",
   "package": "de.greenman999.fullbright.mixin",
-  "compatibilityLevel": "JAVA_17",
-  "mixins": [
-  ],
+  "compatibilityLevel": "JAVA_21",
   "client": [
-    "DoubleSliderCallbacksMixin"
   ],
   "injectors": {
     "defaultRequire": 1

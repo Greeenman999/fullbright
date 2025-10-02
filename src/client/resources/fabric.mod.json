@@ -16,19 +16,19 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "de.greenman999.fullbright.FullbrightMod"
-    ],
-    "modmenu": [ "de.greenman999.fullbright.ModMenuApiImpl" ]
+      "de.greenman999.fullbright.FullbrightClient"
+    ]
   },
   "mixins": [
-    "fullbright.mixins.json"
+    {
+      "config": "fullbright.client.mixins.json",
+      "environment": "client"
+    }
   ],
   "depends": {
-    "fabricloader": ">=0.14.6",
-    "fabric-api": "*",
-    "minecraft": ">=1.20.2",
-    "java": ">=17",
-    "modmenu": ">=8.0.0",
-    "yet_another_config_lib_v3": "*"
+    "fabricloader": ">=0.17.2",
+    "minecraft": "~1.21.8",
+    "java": ">=21",
+    "fabric-api": "*"
   }
 }
