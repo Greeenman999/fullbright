@@ -13,5 +13,5 @@
   "fullbright.config.categories.main.options.open-controls.name": "Open Keybindings",
   "fullbright.config.categories.main.options.open-controls.description": "Open the controls menu to configure the keybinding.",
   "key.fullbright.toggle": "Toggle Fullbright",
-  "category.fullbright.main": "Fullbright"
+  "key.category.fullbright.main": "Fullbright"
 }

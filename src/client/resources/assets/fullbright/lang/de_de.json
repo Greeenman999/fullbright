@@ -13,5 +13,5 @@
   "fullbright.config.categories.main.options.open-controls.name": "Tastenkombinationen öffnen",
   "fullbright.config.categories.main.options.open-controls.description": "Öffne das Steuerungsmenü, um die Tastaturbelegung zu konfigurieren.",
   "key.fullbright.toggle": "Fullbright umschalten",
-  "category.fullbright.main": "Fullbright"
+  "key.category.fullbright.main": "Fullbright"
 }
