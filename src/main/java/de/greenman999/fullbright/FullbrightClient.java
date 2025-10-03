@@ -1,5 +1,6 @@
 package de.greenman999.fullbright;
 
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -48,7 +49,7 @@ public class FullbrightClient implements ClientModInitializer {
                             Text.literal(strength + "").formatted(Formatting.YELLOW)
                     ).formatted(Formatting.GOLD)
                             .append(Text.literal("\n"))
-                            .append(Text.translatable("fullbright.text.help.toggle", Text.translatable(keyBinding.getBoundKeyTranslationKey()))
+                            .append(Text.translatable("fullbright.text.help.toggle", keyBinding.getBoundKeyLocalizedText())
                             .formatted(Formatting.GRAY)
                             ).append(Text.literal("\n"))
                             .append(Text.translatable("fullbright.text.help.strength")
@@ -56,19 +57,28 @@ public class FullbrightClient implements ClientModInitializer {
                             )
 
             );
-
-            /*context.getSource().sendFeedback(
-                    Text.translatable("fullbright.text.version", version)
-                            .formatted(Formatting.AQUA)
-                            .append(Text.literal("\n"))
-                            .append(
-                                    Text.translatable("fullbright.text." + (isToggled() ? "enabled" : "disabled"))
-                                            .formatted(isToggled() ? Formatting.GREEN : Formatting.RED)
-                            )
-            );*/
-
             return 1;
-        })));
+        }).then(ClientCommandManager.literal("toggle").executes(context -> {
+            toggle();
+            context.getSource().sendFeedback(
+                    Text.translatable(
+                            "fullbright.text.toggled",
+                            isToggled() ?
+                                    Text.translatable("fullbright.text.enabled").formatted(Formatting.GREEN)
+                                    : Text.translatable("fullbright.text.disabled").formatted(Formatting.RED)
+                    ).formatted(Formatting.GOLD)
+            );
+            return 1;
+        })).then(ClientCommandManager.literal("strength").then(ClientCommandManager.argument("value", IntegerArgumentType.integer(0, 10)).executes(context -> {
+            strength = IntegerArgumentType.getInteger(context, "value");
+            context.getSource().sendFeedback(
+                    Text.translatable(
+                            "fullbright.text.strength.set",
+                            Text.literal(strength + "").formatted(Formatting.YELLOW)
+                    ).formatted(Formatting.GOLD)
+            );
+            return 1;
+        })))));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (keyBinding.wasPressed()) {
@@ -85,5 +95,9 @@ public class FullbrightClient implements ClientModInitializer {
 
     public static void toggle() {
         toggled = !toggled;
+    }
+
+    public static int getStrength() {
+        return strength;
     }
 }

@@ -4,6 +4,8 @@
   "fullbright.text.disabled": "ausgeschaltet",
   "fullbright.text.help.toggle": "Umschalten mit Tastenkürzel (%s) oder Befehl (/fullbright toggle)",
   "fullbright.text.help.strength": "Fullbright-Stärke mit Befehl (/fullbright strength <0-10>) einstellen",
+  "fullbright.text.toggled": "Fullbright wurde %s",
+  "fullbright.text.strength.set": "Fullbright-Stärke auf %s gesetzt",
   "key.fullbright.toggle": "Fullbright umschalten",
   "key.category.fullbright.main": "Fullbright"
 }

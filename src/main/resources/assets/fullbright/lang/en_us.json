@@ -4,6 +4,8 @@
   "fullbright.text.disabled": "disabled",
   "fullbright.text.help.toggle": "Toggle with keybind (%s) or command (/fullbright toggle)",
   "fullbright.text.help.strength": "Configure fullbright strength with command (/fullbright strength <0-10>)",
+  "fullbright.text.toggled": "Toggled fullbright %s",
+  "fullbright.text.strength.set": "Set fullbright strength to %s",
   "key.fullbright.toggle": "Toggle Fullbright",
   "key.category.fullbright.main": "Fullbright"
 }
