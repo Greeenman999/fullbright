@@ -1,0 +1,9 @@
+{
+  "fullbright.text.status": "Fullbright %s is %s with strength %s",
+  "fullbright.text.enabled": "enabled",
+  "fullbright.text.disabled": "disabled",
+  "fullbright.text.help.toggle": "Toggle with keybind (%s) or command (/fullbright toggle)",
+  "fullbright.text.help.strength": "Configure fullbright strength with command (/fullbright strength <0-10>)",
+  "key.fullbright.toggle": "Toggle Fullbright",
+  "key.category.fullbright.main": "Fullbright"
+}

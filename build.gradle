@@ -18,22 +18,6 @@ repositories {
 	// for more information about repositories.
 	mavenCentral()
 	maven { url = "https://maven.fabricmc.net/" }
-	maven { url = "https://jitpack.io" }
-	maven { url "https://maven.terraformersmc.com/releases/" }
-	maven { url "https://maven.isxander.dev/releases"}
-	maven { url "https://oss.sonatype.org/content/repositories/snapshots"}
-}
-
-loom {
-	splitEnvironmentSourceSets()
-
-	mods {
-		"fullbright" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
-	}
-
 }
 
 dependencies {
@@ -50,7 +34,7 @@ processResources {
 	inputs.property "version", project.version
 
 	filesMatching("fabric.mod.json") {
-		expand "version": inputs.properties.version
+		expand "version": project.version
 	}
 }
 
