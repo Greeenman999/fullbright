@@ -15,6 +15,7 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ public class FullbrightMod implements ClientModInitializer {
 				"key.fullbright.toggle",
 				InputUtil.Type.KEYSYM,
 				GLFW.GLFW_KEY_B,
-				"category.fullbright.main"
+				KeyBinding.Category.create(Identifier.of("fullbright", "main"))
 		));
 
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) ->

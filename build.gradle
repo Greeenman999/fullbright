@@ -1,12 +1,12 @@
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'fabric-loom' version '1.11-SNAPSHOT'
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+base {
+	archivesName = project.archives_base_name
+}
 
-archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
@@ -33,7 +33,7 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modApi("com.terraformersmc:modmenu:${project.modmenu_version}")
-	modImplementation 'dev.isxander:yet-another-config-lib:3.5.0+1.21-fabric'
+	modImplementation 'dev.isxander:yet-another-config-lib:3.8.0+1.21.9-fabric'
 	implementation 'com.google.code.gson:gson:2.10.1'
 }
 
@@ -51,11 +51,13 @@ tasks.withType(JavaCompile).configureEach {
 
 java {
 	withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
+		rename { "${it}_${project.base.archivesName}" }
 	}
 }
 
