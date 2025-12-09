@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "fullbright",
+  "id": "${id}",
   "version": "${version}",
-  "name": "Fullbright",
+  "name": "${name}",
   "description": "This is a fabric mod that adds a fullbright feature to the game.",
   "authors": [
     "Greenman999"
@@ -27,8 +27,7 @@
   ],
   "depends": {
     "fabricloader": ">=0.17.2",
-    "minecraft": "~1.21.8",
-    "java": ">=21",
+    "minecraft": "${minecraft}",
     "fabric-api": "*"
   }
 }

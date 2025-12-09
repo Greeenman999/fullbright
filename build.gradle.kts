@@ -1,0 +1,85 @@
+plugins {
+	id("fabric-loom") version "1.14-SNAPSHOT"
+
+}
+
+val requiredJava = when {
+    stonecutter.eval(stonecutter.current.version, ">=1.20.6") -> JavaVersion.VERSION_21
+    stonecutter.eval(stonecutter.current.version, ">=1.18") -> JavaVersion.VERSION_17
+    stonecutter.eval(stonecutter.current.version, ">=1.17") -> JavaVersion.VERSION_16
+    else -> JavaVersion.VERSION_1_8
+}
+
+version = "${property("mod.version")}+${stonecutter.current.version}"
+base.archivesName = property("mod.id") as String
+
+repositories {
+	mavenCentral()
+	maven("https://maven.fabricmc.net/")
+	maven("https://maven.bawnorton.com/releases")
+}
+
+dependencies {
+	minecraft("com.mojang:minecraft:${stonecutter.current.project}")
+	mappings(loom.officialMojangMappings())
+    modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
+	modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+}
+
+tasks {
+    processResources {
+        inputs.property("id", project.property("mod.id"))
+        inputs.property("name", project.property("mod.name"))
+        inputs.property("version", project.property("mod.version"))
+        inputs.property("minecraft", stonecutter.current.version)
+
+        val props = mapOf(
+            "id" to project.property("mod.id"),
+            "name" to project.property("mod.name"),
+            "version" to project.property("mod.version"),
+            "minecraft" to stonecutter.current.version
+        )
+        filesMatching("fabric.mod.json") {
+            expand(props)
+        }
+
+        val mixinJava = "JAVA_${requiredJava.majorVersion}"
+        filesMatching("*.mixins.json") { expand("java" to mixinJava) }
+    }
+
+    jar {
+        from("LICENSE") {
+            rename { "${it}_${project.base.archivesName.get()}" }
+        }
+    }
+
+    // Builds the version into a shared folder in `build/libs/${mod version}/`
+    register<Copy>("buildAndCollect") {
+        group = "build"
+        from(remapJar.map { it.archiveFile }, remapSourcesJar.map { it.archiveFile })
+        into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
+        dependsOn("build")
+    }
+}
+
+loom {
+    fabricModJsonPath = rootProject.file("src/main/resources/fabric.mod.json") // Useful for interface injection
+    //accessWidenerPath = rootProject.file("src/main/resources/fullbright.accesswidener")
+
+    decompilerOptions.named("vineflower") {
+        options.put("mark-corresponding-synthetics", "1") // Adds names to lambdas - useful for mixins
+    }
+
+    runConfigs.all {
+        ideConfigGenerated(true) // Run configurations are not created for subprojects by default
+        vmArgs("-Dmixin.debug.export=true") // Exports transformed classes for debugging
+        runDir = "../../run" // Use a shared run folder and create separate worlds
+    }
+}
+
+java {
+	withSourcesJar()
+
+	sourceCompatibility = requiredJava
+	targetCompatibility = requiredJava
+}
