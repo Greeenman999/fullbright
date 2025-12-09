@@ -13,7 +13,11 @@ import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.network.chat.Component;
+//? if >=1.21.11 {
 import net.minecraft.resources.Identifier;
+//?} else {
+/*import net.minecraft.resources.ResourceLocation;
+*///?}
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +36,7 @@ public class FullbrightClient implements ClientModInitializer {
                 "key.fullbright.toggle",
                 InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_B,
-                KeyMapping.Category.register(Identifier.fromNamespaceAndPath("fullbright", "main"))
+                KeyMapping.Category.register(/*? >=1.21.11 {*/Identifier/*?} else {*//*ResourceLocation*//*?}*/.fromNamespaceAndPath("fullbright", "main"))
         ));
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
