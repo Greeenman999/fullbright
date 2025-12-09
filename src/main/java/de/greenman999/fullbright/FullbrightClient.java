@@ -1,5 +1,6 @@
 package de.greenman999.fullbright;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
@@ -9,11 +10,10 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +22,17 @@ public class FullbrightClient implements ClientModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("fullbright");
 
-    private static KeyBinding keyBinding;
+    private static KeyMapping keyBinding;
 
     @Override
     public void onInitializeClient() {
         FullbrightConfig.load();
 
-        keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        keyBinding = KeyBindingHelper.registerKeyBinding(new KeyMapping(
                 "key.fullbright.toggle",
-                InputUtil.Type.KEYSYM,
+                InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_B,
-                KeyBinding.Category.create(Identifier.of("fullbright", "main"))
+                KeyMapping.Category.register(Identifier.fromNamespaceAndPath("fullbright", "main"))
         ));
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
@@ -42,20 +42,20 @@ public class FullbrightClient implements ClientModInitializer {
                         String version = modContainer.getMetadata().getVersion().getFriendlyString();
 
                         context.getSource().sendFeedback(
-                                Text.translatable(
+                                Component.translatable(
                                         "fullbright.text.status",
                                         version,
                                         FullbrightConfig.isToggled() ?
-                                                Text.translatable("fullbright.text.enabled").formatted(Formatting.GREEN)
-                                                : Text.translatable("fullbright.text.disabled").formatted(Formatting.RED),
-                                        Text.literal(FullbrightConfig.getStrength() + "").formatted(Formatting.YELLOW)
-                                ).formatted(Formatting.GOLD)
-                                        .append(Text.literal("\n"))
-                                        .append(Text.translatable("fullbright.text.help.toggle", keyBinding.getBoundKeyLocalizedText())
-                                                .formatted(Formatting.GRAY)
-                                        ).append(Text.literal("\n"))
-                                        .append(Text.translatable("fullbright.text.help.strength")
-                                                .formatted(Formatting.GRAY)
+                                                Component.translatable("fullbright.text.enabled").withStyle(ChatFormatting.GREEN)
+                                                : Component.translatable("fullbright.text.disabled").withStyle(ChatFormatting.RED),
+                                        Component.literal(FullbrightConfig.getStrength() + "").withStyle(ChatFormatting.YELLOW)
+                                ).withStyle(ChatFormatting.GOLD)
+                                        .append(Component.literal("\n"))
+                                        .append(Component.translatable("fullbright.text.help.toggle", keyBinding.getTranslatedKeyMessage())
+                                                .withStyle(ChatFormatting.GRAY)
+                                        ).append(Component.literal("\n"))
+                                        .append(Component.translatable("fullbright.text.help.strength")
+                                                .withStyle(ChatFormatting.GRAY)
                                         )
 
                         );
@@ -64,12 +64,12 @@ public class FullbrightClient implements ClientModInitializer {
                     .then(ClientCommandManager.literal("toggle").executes(context -> {
                         FullbrightConfig.toggle();
                         context.getSource().sendFeedback(
-                                Text.translatable(
+                                Component.translatable(
                                         "fullbright.text.toggled",
                                         FullbrightConfig.isToggled() ?
-                                                Text.translatable("fullbright.text.enabled").formatted(Formatting.GREEN)
-                                                : Text.translatable("fullbright.text.disabled").formatted(Formatting.RED)
-                                ).formatted(Formatting.GOLD)
+                                                Component.translatable("fullbright.text.enabled").withStyle(ChatFormatting.GREEN)
+                                                : Component.translatable("fullbright.text.disabled").withStyle(ChatFormatting.RED)
+                                ).withStyle(ChatFormatting.GOLD)
                         );
                         return 1;
                     }))
@@ -78,10 +78,10 @@ public class FullbrightClient implements ClientModInitializer {
                                 int value = IntegerArgumentType.getInteger(context, "value");
                                 FullbrightConfig.setStrength(value);
                                 context.getSource().sendFeedback(
-                                        Text.translatable(
+                                        Component.translatable(
                                                 "fullbright.text.strength.set",
-                                                Text.literal(FullbrightConfig.getStrength() + "").formatted(Formatting.YELLOW)
-                                        ).formatted(Formatting.GOLD)
+                                                Component.literal(FullbrightConfig.getStrength() + "").withStyle(ChatFormatting.YELLOW)
+                                        ).withStyle(ChatFormatting.GOLD)
                                 );
                                 return 1;
                             }))
@@ -91,14 +91,12 @@ public class FullbrightClient implements ClientModInitializer {
         });
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (keyBinding.wasPressed()) {
+            while (keyBinding.consumeClick()) {
                 FullbrightConfig.toggle();
             }
         });
 
-        ClientLifecycleEvents.CLIENT_STOPPING.register(client -> {
-            FullbrightConfig.shutdownIoExecutor();
-        });
+        ClientLifecycleEvents.CLIENT_STOPPING.register(client -> FullbrightConfig.shutdownIoExecutor());
 
         Runtime.getRuntime().addShutdownHook(new Thread(FullbrightConfig::shutdownIoExecutor, "fullbright-shutdown"));
 
