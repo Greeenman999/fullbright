@@ -1,6 +1,6 @@
 plugins {
 	id("fabric-loom") version "1.14-SNAPSHOT"
-
+    id("me.modmuss50.mod-publish-plugin") version "1.1.0"
 }
 
 val requiredJava = when {
@@ -82,4 +82,26 @@ java {
 
 	sourceCompatibility = requiredJava
 	targetCompatibility = requiredJava
+}
+
+// Publishes builds to Modrinth and Curseforge with changelog from the CHANGELOG.md file
+publishMods {
+    file = tasks.remapJar.map { it.archiveFile.get() }
+    additionalFiles.from(tasks.remapSourcesJar.map { it.archiveFile.get() })
+    displayName = "${property("mod.name")} ${property("mod.version")} for ${property("mod.mc_title")}"
+    version = property("mod.version") as String
+    changelog = rootProject.file("CHANGELOG.md").readText()
+    type = STABLE
+    modLoaders.add("fabric")
+
+    dryRun = providers.environmentVariable("MODRINTH_TOKEN").getOrNull() == null
+
+    modrinth {
+        projectId = property("publish.modrinth") as String
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        minecraftVersions.addAll(property("mod.mc_targets").toString().split(' '))
+        requires {
+            slug = "fabric-api"
+        }
+    }
 }
