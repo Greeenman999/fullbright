@@ -36,7 +36,13 @@ public class FullbrightClient implements ClientModInitializer {
                 "key.fullbright.toggle",
                 InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_B,
-                KeyMapping.Category.register(/*? >=1.21.11 {*/Identifier/*?} else {*//*ResourceLocation*//*?}*/.fromNamespaceAndPath("fullbright", "main"))
+                //? if >=1.21.11 {
+                KeyMapping.Category.register(Identifier.fromNamespaceAndPath("fullbright", "main"))
+                //?} elif =1.21.10 {
+                /*KeyMapping.Category.register(ResourceLocation.fromNamespaceAndPath("fullbright", "main"))
+                *///?} else {
+                /*"key.category.fullbright.main"
+                *///?}
         ));
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
