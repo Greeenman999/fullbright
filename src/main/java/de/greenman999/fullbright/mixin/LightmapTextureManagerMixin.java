@@ -2,11 +2,13 @@ package de.greenman999.fullbright.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import de.greenman999.fullbright.FullbrightClient;
+import de.greenman999.fullbright.FullbrightConfig;
 import net.minecraft.client.render.LightmapTextureManager;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+@Debug(export = true)
 @Mixin(LightmapTextureManager.class)
 public abstract class LightmapTextureManagerMixin {
 
@@ -14,9 +16,9 @@ public abstract class LightmapTextureManagerMixin {
             method = "update",
             at = @At(value = "INVOKE", target = "Ljava/lang/Double;floatValue()F", ordinal = 1)
     )
-    private float modifyLightmap(Double instance, Operation<Float> original) {
-        if (FullbrightClient.isToggled()) {
-            return FullbrightClient.getStrength();
+    private float changeGamma(Double instance, Operation<Float> original) {
+        if (FullbrightConfig.isToggled()) {
+            return (float) FullbrightConfig.getStrength();
         } else {
             return original.call(instance);
         }
