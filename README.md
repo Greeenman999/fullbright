@@ -22,4 +22,4 @@ After completion the compiled jar should appear in  `build/libs/`.
 3. Use `/fullbright strength <value>` to set the brightness strength (default: `10`, max: `10`, min: `0`).
 4. Have fun!
 
-### If you have any further issues, create an issue on [my github](https://github.com/Greeenman999/1.19-fullbright/issues) or message me on discord `@greenman999`.
+### If you have any further issues, create an issue on [my github](https://github.com/Greeenman999/fullbright/issues) or message me on discord `@greenman999`.
