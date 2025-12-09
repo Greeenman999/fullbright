@@ -3,7 +3,7 @@
   "package": "de.greenman999.fullbright.mixin",
   "compatibilityLevel": "${java}",
   "client": [
-    "LightmapTextureManagerMixin"
+    "LightTextureMixin"
   ],
   "injectors": {
     "defaultRequire": 1

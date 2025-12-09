@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Debug(export = true)
 @Mixin(LightTexture.class)
-public abstract class LightmapTextureManagerMixin {
+public abstract class LightTextureMixin {
 
     @WrapOperation(
             method = "updateLightTexture",
