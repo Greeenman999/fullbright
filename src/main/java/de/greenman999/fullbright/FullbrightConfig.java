@@ -102,17 +102,12 @@ public class FullbrightConfig {
     }
 
     public static synchronized void setStrength(int value) {
-        int clamped = clamp(value, 0, 10);
+        int clamped = Math.clamp(value, 0, 10);
         if (clamped != value) {
             LOGGER.warn("Attempted to set strength {} out of bounds; clamping to {}", value, clamped);
         }
         strength = clamped;
         saveAsync();
-    }
-
-    private static int clamp(int v, int min, int max) {
-        if (v < min) return min;
-        return Math.min(v, max);
     }
 
     public static void shutdownIoExecutor() {
