@@ -9,21 +9,17 @@ Download the jar from [modrinth](https://modrinth.com/mod/fullbright) and instal
 
 [![](https://github.com/Prospector/badges/blob/master/modrinth-badge-72h-padded.png?raw=true)](https://modrinth.com/mod/fullbright)
 
-Or clone the github repository and execute `./gradlew build`.
+Or clone the github repository and execute `./gradlew buildAndCollect`.
 After completion the compiled jar should appear in  `build/libs/`.
 
 ## Dependencies
 - [Fabric API](https://modrinth.com/mod/fabric-api)
-- [Mod Menu](https://modrinth.com/mod/modmenu)
-- [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
 
 ## Usage
 
 1. Make sure all the dependencies are installed.
-2. Open the config screen via Mod Menu or execute `/fullbright-config`.
-3. Configure the settings to your liking.
-4. Press the button `Save Changes` and then `Done` to save the settings and apply them to the game.
-5. Press the keybinding to toggle fullbright (Default: `B`).
-6. Enjoy!
+2. Use `/fullbright toggle` or the keybind (default: `B`) to toggle fullbright on and off.
+3. Use `/fullbright strength <value>` to set the brightness strength (default: `10`, max: `10`, min: `0`).
+4. Have fun!
 
 ### If you have any further issues, create an issue on [my github](https://github.com/Greeenman999/1.19-fullbright/issues) or message me on discord `@greenman999`.
