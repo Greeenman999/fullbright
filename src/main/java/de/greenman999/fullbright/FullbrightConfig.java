@@ -102,7 +102,7 @@ public class FullbrightConfig {
     }
 
     public static synchronized void setStrength(int value) {
-        int clamped = Math.clamp(value, 0, 10);
+        int clamped = /*? if <1.20.6 { *//*Math.max(0, Math.min(10, value))*//*?} else {*/Math.clamp(value, 0, 10)/*?}*/;
         if (clamped != value) {
             LOGGER.warn("Attempted to set strength {} out of bounds; clamping to {}", value, clamped);
         }
