@@ -26,6 +26,12 @@ dependencies {
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
 }
 
+stonecutter {
+    replacements.string(current.parsed >= "1.21.11") {
+        replace("ResourceLocation", "Identifier")
+    }
+}
+
 tasks {
     processResources {
         inputs.property("id", project.property("mod.id"))
