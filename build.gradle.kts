@@ -1,6 +1,7 @@
 plugins {
 	id("fabric-loom") version "1.14-SNAPSHOT"
     id("me.modmuss50.mod-publish-plugin") version "1.1.0"
+    kotlin("jvm") version "2.2.21"
 }
 
 val requiredJava = when {
@@ -17,6 +18,7 @@ repositories {
 	mavenCentral()
 	maven("https://maven.fabricmc.net/")
 	maven("https://maven.bawnorton.com/releases")
+    maven("https://repo.essential.gg/repository/maven-public")
 }
 
 dependencies {
@@ -24,6 +26,10 @@ dependencies {
 	mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+    modImplementation("net.fabricmc:fabric-language-kotlin:1.13.7+kotlin.2.2.21")
+
+    implementation(include("gg.essential:elementa:${property("deps.elementa")}")!!)
+    modImplementation(include("gg.essential:universalcraft-${property("deps.elementa.mc")}-fabric:${property("deps.universalcraft")}")!!)
 }
 
 stonecutter {
@@ -88,6 +94,10 @@ java {
 
 	sourceCompatibility = requiredJava
 	targetCompatibility = requiredJava
+}
+
+kotlin {
+    jvmToolchain(requiredJava.majorVersion.toInt())
 }
 
 // Publishes builds to Modrinth and Curseforge with changelog from the CHANGELOG.md file

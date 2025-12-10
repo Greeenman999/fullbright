@@ -2,6 +2,8 @@ package de.greenman999.fullbright;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import de.greenman999.fullbright.gui.ConfigScreen;
+import gg.essential.universal.UScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -23,6 +25,8 @@ public class FullbrightClient implements ClientModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("fullbright");
 
     private static KeyMapping keyBinding;
+
+    private boolean scheduleOpenConfig = false;
 
     @Override
     public void onInitializeClient() {
@@ -89,12 +93,20 @@ public class FullbrightClient implements ClientModInitializer {
                                 );
                                 return 1;
                             }))
-                    );
+                    )
+                    .then(ClientCommandManager.literal("config").executes(context -> {
+                        scheduleOpenConfig = true;
+                        return 1;
+                    }));
 
             dispatcher.register(fullbrightCmd);
         });
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (scheduleOpenConfig) {
+                scheduleOpenConfig = false;
+                UScreen.displayScreen(new ConfigScreen());
+            }
             while (keyBinding.consumeClick()) {
                 FullbrightConfig.toggle();
             }
