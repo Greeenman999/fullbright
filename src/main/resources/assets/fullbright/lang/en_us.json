@@ -11,5 +11,6 @@
   "fullbright.gui.title": "Fullbright Settings",
   "fullbright.gui.enable": "Enable Fullbright",
   "fullbright.gui.enable.true": "Enabled",
-  "fullbright.gui.enable.false": "Disabled"
+  "fullbright.gui.enable.false": "Disabled",
+  "fullbright.gui.strength": "Strength / Gamma"
 }
