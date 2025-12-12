@@ -18,7 +18,7 @@ import java.awt.Color
 
 class UIButton(text: String, textColor: Color) : UIContainer() {
 
-    private var onClick: () -> Unit = {}
+    private var onClick: (UIButton) -> Unit = {}
 
     private val container by UIBlock(Color(89, 89, 89)).constrain {
         width = CoerceAtLeastConstraint(ChildBasedSizeConstraint() + 20.pixels(), 80.pixels())
@@ -45,7 +45,7 @@ class UIButton(text: String, textColor: Color) : UIContainer() {
         }.onMouseClick {
             setColor(Color(70, 70, 70))
             USound.playButtonPress()
-            onClick()
+            onClick(this@UIButton)
         }.onMouseRelease {
             setColor(Color(89, 89, 89))
         } childOf this
@@ -59,7 +59,8 @@ class UIButton(text: String, textColor: Color) : UIContainer() {
         uiText.setColor(color)
     }
 
-    fun setOnClick(cb: () -> Unit) {
+    fun onClick(cb: (UIButton) -> Unit): UIContainer {
         this.onClick = cb
+        return this
     }
 }
