@@ -9,7 +9,6 @@ import gg.essential.elementa.WindowScreen
 import gg.essential.elementa.components.UIContainer
 import gg.essential.elementa.components.UIText
 import gg.essential.elementa.components.UIWrappedText
-import gg.essential.elementa.components.inspector.Inspector
 import gg.essential.elementa.constraints.CenterConstraint
 import gg.essential.elementa.constraints.ChildBasedMaxSizeConstraint
 import gg.essential.elementa.constraints.ChildBasedSizeConstraint
@@ -25,6 +24,7 @@ import gg.essential.elementa.dsl.pixels
 import gg.essential.elementa.dsl.plus
 import gg.essential.elementa.dsl.toConstraint
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.screens.Screen
 /*? if >1.20.6 {*/
 import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen
 /*? } else {*/
@@ -33,7 +33,7 @@ import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen
 import net.minecraft.network.chat.Component
 import java.awt.Color
 
-class ConfigScreen : WindowScreen(ElementaVersion.V10, true, true, true) {
+class ConfigScreen(val parent: Screen? = null) : WindowScreen(ElementaVersion.V10, true, true, true) {
 
     init {
         UIText(translatable("fullbright.gui.title")).constrain {
@@ -135,5 +135,10 @@ class ConfigScreen : WindowScreen(ElementaVersion.V10, true, true, true) {
 
     fun translatable(key: String, argument: Component? = null): String {
         return argument?.let { Component.translatable(key, it) }?.string ?: Component.translatable(key).string
+    }
+
+    override fun onClose() {
+        super.onClose()
+        parent?.let { Minecraft.getInstance().setScreen(it) }
     }
 }
