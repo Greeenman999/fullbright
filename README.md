@@ -23,3 +23,12 @@ After completion the compiled jar should appear in  `build/libs/`.
 4. Have fun!
 
 ### If you have any further issues, create an issue on [my github](https://github.com/Greeenman999/fullbright/issues) or message me on discord `@greenman999`.
+
+## License
+
+This project is licensed under the GNU General Public License v3.
+
+### Third-Party Code
+
+This project includes some code from [Vigilance](https://github.com/EssentialGG/Vigilance),
+licensed under the GNU Lesser General Public License v3. See [NOTICE.md](NOTICE.md) for details.
