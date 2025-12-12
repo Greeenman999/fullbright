@@ -17,6 +17,9 @@
   "entrypoints": {
     "client": [
       "de.greenman999.fullbright.FullbrightClient"
+    ],
+    "modmenu": [
+      "de.greenman999.fullbright.compat.ModMenuApiImpl"
     ]
   },
   "mixins": [

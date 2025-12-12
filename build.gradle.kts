@@ -17,6 +17,7 @@ base.archivesName = property("mod.id") as String
 repositories {
 	mavenCentral()
 	maven("https://maven.fabricmc.net/")
+    maven("https://maven.terraformersmc.com/")
 	maven("https://maven.bawnorton.com/releases")
     maven("https://repo.essential.gg/repository/maven-public")
 }
@@ -30,6 +31,8 @@ dependencies {
 
     implementation(include("gg.essential:elementa:${property("deps.elementa")}")!!)
     modImplementation(include("gg.essential:universalcraft-${property("deps.elementa.mc")}-fabric:${property("deps.universalcraft")}")!!)
+
+    modImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
 }
 
 stonecutter {
