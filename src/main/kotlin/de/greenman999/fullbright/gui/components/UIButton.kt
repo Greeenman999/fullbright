@@ -1,7 +1,7 @@
 package de.greenman999.fullbright.gui.components
 
-import gg.essential.elementa.UIComponent
 import gg.essential.elementa.components.UIBlock
+import gg.essential.elementa.components.UIContainer
 import gg.essential.elementa.components.UIText
 import gg.essential.elementa.constraints.CenterConstraint
 import gg.essential.elementa.constraints.ChildBasedSizeConstraint
@@ -16,7 +16,7 @@ import gg.essential.elementa.effects.OutlineEffect
 import gg.essential.universal.USound
 import java.awt.Color
 
-class UIButton(text: String, textColor: Color) : UIComponent() {
+class UIButton(text: String, textColor: Color) : UIContainer() {
 
     private var onClick: () -> Unit = {}
 
