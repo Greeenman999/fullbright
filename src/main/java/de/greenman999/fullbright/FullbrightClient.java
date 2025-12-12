@@ -24,7 +24,7 @@ public class FullbrightClient implements ClientModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("fullbright");
 
-    private static KeyMapping keyBinding;
+    public static KeyMapping keyBinding;
 
     private boolean scheduleOpenConfig = false;
 

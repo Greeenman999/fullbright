@@ -12,5 +12,8 @@
   "fullbright.gui.enable": "Enable Fullbright",
   "fullbright.gui.enable.true": "Enabled",
   "fullbright.gui.enable.false": "Disabled",
-  "fullbright.gui.strength": "Strength / Gamma"
+  "fullbright.gui.strength": "Strength / Gamma",
+  "fullbright.gui.keybind": "Please configure your keybinds in the Controls menu. Current keybind: %s",
+  "fullbright.gui.open_keybinds": "Open Controls",
+  "fullbright.gui.keybind_notice": "Note: The keybind above is not updated unless you reopen this menu."
 }
