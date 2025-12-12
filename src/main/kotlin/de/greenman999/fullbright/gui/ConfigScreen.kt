@@ -116,10 +116,10 @@ class ConfigScreen : WindowScreen(ElementaVersion.V10, true, true, true) {
             Minecraft.getInstance().setScreen(Minecraft.getInstance().screen?.let { screen -> KeyBindsScreen(screen, Minecraft.getInstance().options) })
         } childOf keybindBlock
 
-        Inspector(window).constrain {
+        /*Inspector(window).constrain {
             x = 10.pixels(true)
             y = 10.pixels(true)
-        } childOf window
+        } childOf window*/
     }
 
     fun createConfigEntryBlock(configEntries: UIContainer): UIContainer {
