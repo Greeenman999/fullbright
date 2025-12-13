@@ -1,3 +1,5 @@
+import net.fabricmc.loom.task.RemapJarTask
+
 plugins {
 	id("fabric-loom") version "1.14-SNAPSHOT"
     id("me.modmuss50.mod-publish-plugin") version "1.1.0"
@@ -64,9 +66,17 @@ tasks {
         filesMatching("*.mixins.json") { expand("java" to mixinJava) }
     }
 
-    jar {
+    /*jar {
         from("LICENSE") {
             rename { "${it}_${project.base.archivesName.get()}" }
+        }
+    }*/
+    withType<RemapJarTask> {
+        from("LICENSE") {
+            rename { "${it}_${project.base.archivesName.get()}" }
+        }
+        from("licenses") {
+            into("licenses")
         }
     }
 
