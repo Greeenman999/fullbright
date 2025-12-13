@@ -7,5 +7,11 @@
   "fullbright.text.toggled": "Fullbright wurde %s",
   "fullbright.text.strength.set": "Fullbright-Stärke auf %s gesetzt",
   "key.fullbright.toggle": "Fullbright umschalten",
-  "key.category.fullbright.main": "Fullbright"
+  "key.category.fullbright.main": "Fullbright",
+  "fullbright.gui.title": "Fullbright Einstellungen",
+  "fullbright.gui.enable": "Fullbright aktivieren",
+  "fullbright.gui.enable.true": "Aktiviert",
+  "fullbright.gui.enable.false": "Deaktiviert",
+  "fullbright.gui.strength": "Stärke / Gamma",
+  "fullbright.gui.keybind": "Tastenkürzel zum Umschalten"
 }
