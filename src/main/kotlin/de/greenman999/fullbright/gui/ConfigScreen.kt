@@ -98,7 +98,7 @@ class ConfigScreen(val parent: Screen? = null) : WindowScreen(ElementaVersion.V1
             updateKeybindText(it)
         } childOf keybindBlock
 
-        window.onKeyType { keyChar, keyCode ->
+        window.onKeyType { _, keyCode ->
             if (!selectingKey) return@onKeyType
             if (keyCode == InputConstants.KEY_ESCAPE) return@onKeyType
 
