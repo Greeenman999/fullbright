@@ -1,5 +1,6 @@
 package de.greenman999.fullbright.gui
 
+import com.mojang.blaze3d.platform.InputConstants
 import de.greenman999.fullbright.FullbrightClient
 import de.greenman999.fullbright.FullbrightConfig
 import de.greenman999.fullbright.gui.components.Slider
@@ -8,28 +9,12 @@ import gg.essential.elementa.ElementaVersion
 import gg.essential.elementa.WindowScreen
 import gg.essential.elementa.components.UIContainer
 import gg.essential.elementa.components.UIText
-import gg.essential.elementa.components.UIWrappedText
-import gg.essential.elementa.constraints.CenterConstraint
-import gg.essential.elementa.constraints.ChildBasedMaxSizeConstraint
-import gg.essential.elementa.constraints.ChildBasedSizeConstraint
-import gg.essential.elementa.constraints.CoerceAtLeastConstraint
-import gg.essential.elementa.constraints.FillConstraint
-import gg.essential.elementa.constraints.RelativeConstraint
-import gg.essential.elementa.constraints.RelativeWindowConstraint
-import gg.essential.elementa.constraints.SiblingConstraint
-import gg.essential.elementa.dsl.childOf
-import gg.essential.elementa.dsl.constrain
-import gg.essential.elementa.dsl.minus
-import gg.essential.elementa.dsl.pixels
-import gg.essential.elementa.dsl.plus
-import gg.essential.elementa.dsl.toConstraint
+import gg.essential.elementa.constraints.*
+import gg.essential.elementa.dsl.*
+import gg.essential.universal.USound
+import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
-/*? if >1.20.6 {*/
-import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen
-/*? } else {*/
-/*import net.minecraft.client.gui.screens.controls.KeyBindsScreen
-*//*? }*/
 import net.minecraft.network.chat.Component
 import java.awt.Color
 
@@ -88,33 +73,40 @@ class ConfigScreen(val parent: Screen? = null) : WindowScreen(ElementaVersion.V1
         }
 
         val keybindBlock = createConfigEntryBlock(configEntries)
-        val keybindText = UIContainer().constrain {
+        UIText(translatable("fullbright.gui.keybind")).constrain {
             x = 0.pixels()
             y = CenterConstraint()
-            width = FillConstraint() - 2.pixels()
-            height = ChildBasedSizeConstraint()
         } childOf keybindBlock
-        UIWrappedText(translatable("fullbright.gui.keybind", FullbrightClient.keyBinding.translatedKeyMessage)).constrain {
-            x = 0.pixels()
-            y = SiblingConstraint(2f)
-            width = RelativeConstraint(1f)
-        } childOf keybindText
-        UIWrappedText(translatable("fullbright.gui.keybind_notice")).constrain {
-            x = 0.pixels()
-            y = SiblingConstraint(2f)
-            width = RelativeConstraint(1f)
-            color = Color.LIGHT_GRAY.toConstraint()
-        } childOf keybindText
 
-        UIButton(
-            translatable("fullbright.gui.open_keybinds"),
+        var selectingKey = false
+        fun updateKeybindText(button: UIButton) {
+            if (selectingKey) {
+                button.setText("> %s <".format(FullbrightClient.keyBinding.translatedKeyMessage.string.uppercase()))
+            } else {
+                button.setText(FullbrightClient.keyBinding.translatedKeyMessage.string.uppercase())
+            }
+        }
+        val keybindButton = UIButton(
+            FullbrightClient.keyBinding.translatedKeyMessage.string.uppercase(),
             Color.WHITE
         ).constrain {
             x = 0.pixels(true)
             y = CenterConstraint()
         }.onClick {
-            Minecraft.getInstance().setScreen(Minecraft.getInstance().screen?.let { screen -> KeyBindsScreen(screen, Minecraft.getInstance().options) })
+            USound.playButtonPress()
+            selectingKey = !selectingKey
+            updateKeybindText(it)
         } childOf keybindBlock
+
+        window.onKeyType { keyChar, keyCode ->
+            if (!selectingKey) return@onKeyType
+            if (keyCode == InputConstants.KEY_ESCAPE) return@onKeyType
+
+            FullbrightClient.keyBinding.setKey(InputConstants.Type.KEYSYM.getOrCreate(keyCode))
+            KeyMapping.resetMapping()
+            selectingKey = false
+            updateKeybindText(keybindButton as UIButton)
+        }
 
         /*Inspector(window).constrain {
             x = 10.pixels(true)
