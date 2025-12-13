@@ -115,7 +115,7 @@ publishMods {
     type = STABLE
     modLoaders.add("fabric")
 
-    dryRun = providers.environmentVariable("MODRINTH_TOKEN").getOrNull() == null
+    dryRun = providers.gradleProperty("MODRINTH_TOKEN").getOrNull() == null
 
     modrinth {
         projectId = property("publish.modrinth") as String
