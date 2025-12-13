@@ -47,12 +47,14 @@ tasks {
         inputs.property("name", project.property("mod.name"))
         inputs.property("version", project.property("mod.version"))
         inputs.property("minecraft", project.property("mod.mc_dep"))
+        val fabricModJsonJava = ">=${requiredJava.majorVersion}"
 
         val props = mapOf(
             "id" to project.property("mod.id"),
             "name" to project.property("mod.name"),
             "version" to project.property("mod.version"),
-            "minecraft" to project.property("mod.mc_dep")
+            "minecraft" to project.property("mod.mc_dep"),
+            "java" to fabricModJsonJava
         )
         filesMatching("fabric.mod.json") {
             expand(props)
@@ -121,6 +123,12 @@ publishMods {
         minecraftVersions.addAll(property("mod.mc_targets").toString().split(' '))
         requires {
             slug = "fabric-api"
+        }
+        requires {
+            slug = "fabric-language-kotlin"
+        }
+        optional {
+            slug = "modmenu"
         }
     }
 }

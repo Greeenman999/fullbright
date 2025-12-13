@@ -31,6 +31,11 @@
   "depends": {
     "fabricloader": ">=0.17.2",
     "minecraft": "${minecraft}",
-    "fabric-api": "*"
+    "fabric-api": "*",
+    "java": "${java}",
+    "fabric-language-kotlin": "^1.13.7+kotlin.2.2.21"
+  },
+  "suggests": {
+    "modmenu": "*"
   }
 }
