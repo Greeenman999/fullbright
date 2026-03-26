@@ -26,7 +26,7 @@ platform {
             versionRange = ">=${libs.fabric.loader.get().version}"
         }
         required("fabric-language-kotlin") {
-            slug("fabric-kotlin-language")
+            slug("fabric-language-kotlin")
             versionRange = ">=${prop("deps.fabric-kotlin")}"
         }
         optional("modmenu") {}
