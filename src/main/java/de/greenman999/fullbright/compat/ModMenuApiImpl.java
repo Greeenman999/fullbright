@@ -1,5 +1,5 @@
 package de.greenman999.fullbright.compat;
-
+//? if fabric {
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import de.greenman999.fullbright.gui.ConfigScreen;
@@ -11,3 +11,4 @@ public class ModMenuApiImpl implements ModMenuApi {
         return parent -> (UScreen) new ConfigScreen(parent);
     }
 }
+//?}

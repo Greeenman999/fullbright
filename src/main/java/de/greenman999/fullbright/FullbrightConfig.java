@@ -1,6 +1,5 @@
 package de.greenman999.fullbright;
 
-import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +28,7 @@ public class FullbrightConfig {
     });
 
     public static synchronized void load() {
-        Path configDir = FabricLoader.getInstance().getConfigDir();
+        Path configDir = Fullbright.xplat().configDirectory();
         try {
             Files.createDirectories(configDir);
         } catch (IOException e) {
@@ -64,7 +63,7 @@ public class FullbrightConfig {
     }
 
     private static void saveToDisk(boolean toggledSnapshot, int strengthSnapshot) {
-        Path configDir = FabricLoader.getInstance().getConfigDir();
+        Path configDir = Fullbright.xplat().configDirectory();
         try {
             Files.createDirectories(configDir);
         } catch (IOException e) {

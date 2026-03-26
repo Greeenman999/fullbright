@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.0
+- Add support for Minecraft 26.1
+
+Not yet working:
+- Add support for forge and neoforge (fabric support is still available)
+
 ## 3.1.0
 - Add new gui for easier configuration
 

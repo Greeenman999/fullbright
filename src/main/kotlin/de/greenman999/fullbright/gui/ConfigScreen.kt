@@ -1,7 +1,7 @@
 package de.greenman999.fullbright.gui
 
 import com.mojang.blaze3d.platform.InputConstants
-import de.greenman999.fullbright.FullbrightClient
+import de.greenman999.fullbright.Fullbright
 import de.greenman999.fullbright.FullbrightConfig
 import de.greenman999.fullbright.gui.components.Slider
 import de.greenman999.fullbright.gui.components.UIButton
@@ -81,13 +81,13 @@ class ConfigScreen(val parent: Screen? = null) : WindowScreen(ElementaVersion.V1
         var selectingKey = false
         fun updateKeybindText(button: UIButton) {
             if (selectingKey) {
-                button.setText("> %s <".format(FullbrightClient.keyBinding.translatedKeyMessage.string.uppercase()))
+                button.setText("> %s <".format(Fullbright.keyBinding.translatedKeyMessage.string.uppercase()))
             } else {
-                button.setText(FullbrightClient.keyBinding.translatedKeyMessage.string.uppercase())
+                button.setText(Fullbright.keyBinding.translatedKeyMessage.string.uppercase())
             }
         }
         val keybindButton = UIButton(
-            FullbrightClient.keyBinding.translatedKeyMessage.string.uppercase(),
+            Fullbright.keyBinding.translatedKeyMessage.string.uppercase(),
             Color.WHITE
         ).constrain {
             x = 0.pixels(true)
@@ -102,7 +102,7 @@ class ConfigScreen(val parent: Screen? = null) : WindowScreen(ElementaVersion.V1
             if (!selectingKey) return@onKeyType
             if (keyCode == InputConstants.KEY_ESCAPE) return@onKeyType
 
-            FullbrightClient.keyBinding.setKey(InputConstants.Type.KEYSYM.getOrCreate(keyCode))
+            Fullbright.keyBinding.setKey(InputConstants.Type.KEYSYM.getOrCreate(keyCode))
             KeyMapping.resetMapping()
             selectingKey = false
             updateKeybindText(keybindButton as UIButton)
