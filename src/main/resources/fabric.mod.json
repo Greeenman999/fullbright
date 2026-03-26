@@ -18,7 +18,7 @@
     }
   },
   "description": "${description}",
-  "icon": "assets/icon.png",
+  "icon": "assets/fullbright/icon.png",
   "license": "${license}",
   "environment": "*",
   "accessWidener": "aw/${minecraft}.accesswidener",
