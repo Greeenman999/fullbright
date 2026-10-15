@@ -10,6 +10,9 @@ Download the jar from [modrinth](https://modrinth.com/mod/fullbright) and instal
 Or clone the github repository and execute `./gradlew buildAndCollect`.
 After completion the compiled jar should appear in  `build/libs/`.
 
+For Minecraft **26.3**, use **Java 25** and run
+`./gradlew --configure-on-demand :26.3:buildAndCollect`.
+
 ## Dependencies
 - [Fabric API](https://modrinth.com/mod/fabric-api)
 - [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin)

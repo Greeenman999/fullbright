@@ -12,8 +12,12 @@ import gg.essential.elementa.components.UIText
 import gg.essential.elementa.constraints.*
 import gg.essential.elementa.dsl.*
 import gg.essential.universal.USound
+import gg.essential.universal.UScreen
+//? if >=26.3 {
+/*import gg.essential.universal.UKeyboard
+import org.lwjgl.sdl.SDLKeyboard
+*///?}
 import net.minecraft.client.KeyMapping
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 import java.awt.Color
@@ -100,9 +104,15 @@ class ConfigScreen(val parent: Screen? = null) : WindowScreen(ElementaVersion.V1
 
         window.onKeyType { _, keyCode ->
             if (!selectingKey) return@onKeyType
+            //? if >=26.3 {
+            /*if (keyCode == UKeyboard.KEY_ESCAPE) return@onKeyType
+            val bindingKey = SDLKeyboard.SDL_GetScancodeFromKey(keyCode, null)
+            *///?} else {
             if (keyCode == InputConstants.KEY_ESCAPE) return@onKeyType
+            val bindingKey = keyCode
+            //?}
 
-            FullbrightClient.keyBinding.setKey(InputConstants.Type.KEYSYM.getOrCreate(keyCode))
+            FullbrightClient.keyBinding.setKey(InputConstants.Type.KEYSYM.getOrCreate(bindingKey))
             KeyMapping.resetMapping()
             selectingKey = false
             updateKeybindText(keybindButton as UIButton)
@@ -131,6 +141,6 @@ class ConfigScreen(val parent: Screen? = null) : WindowScreen(ElementaVersion.V1
 
     override fun onClose() {
         super.onClose()
-        parent?.let { Minecraft.getInstance().setScreen(it) }
+        parent?.let { UScreen.displayScreen(it) }
     }
 }

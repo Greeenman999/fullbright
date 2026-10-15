@@ -16,7 +16,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +34,7 @@ public class FullbrightClient implements ClientModInitializer {
         keyBinding = KeyBindingHelper.registerKeyBinding(new KeyMapping(
                 "key.fullbright.toggle",
                 InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_B,
+                InputConstants.KEY_B,
                 //? if >=1.21.9 {
                 KeyMapping.Category.register(Identifier.fromNamespaceAndPath("fullbright", "main"))
                 //?} else {
